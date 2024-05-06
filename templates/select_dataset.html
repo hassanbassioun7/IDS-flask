@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Dataset</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body class="select_dataset">
+    {% extends "header.html" %}
+
+    {% block content %}
+
+    <ul class="top-level-menu">
+        <li class="slct">
+            <span id="text">Select Dataset</span>
+            <ion-icon name="chevron-down-outline" class="icon-arrow"></ion-icon>
+
+            <ul class="second-level-menu">
+                <li class="slct_dataset" style="--i:2">
+
+                    <span>
+                        <ion-icon name="layers" class="icon"></ion-icon>
+                        <span class="option-text">KDD CUP 99</span>
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                    </span>
+
+                    <ion-icon name="chevron-forward-outline" class="icon2-arrow"></ion-icon>
+
+                    <ul class="third-level-menu">
+                        <li class="slct_model" style="--i:2">
+                            <a href="{{url_for('prediction')}}">DNN
+                                <ion-icon name="information-circle-outline" style="float: right;"></ion-icon>
+                            </a>
+                        </li>
+                        <li class="slct_model" style="--i:1">
+                            <a href="{{url_for('predictionCopy')}}">DT
+                                <ion-icon name="information-circle-outline" style="float: right;"></ion-icon>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+                <li class="slct_dataset" style="--i:1">
+
+                    <span>
+                        <ion-icon name="bug" class="icon"></ion-icon>
+                        <span class="option-text">UNSW NB 15</span>
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                    </span>
+
+                    <ion-icon name="chevron-forward-outline" class="icon2-arrow"></ion-icon>
+
+                    <ul class="third-level-menu">
+                        <li class="slct_model" style="--i:2">
+                            <a href="#">CNN
+                                <ion-icon name="information-circle-outline" style="float: right;"></ion-icon>
+                            </a>
+                        </li>
+                        <li class="slct_model" style="--i:1">
+                            <a href="#">MLP
+                                <ion-icon name="information-circle-outline" style="float: right;"></ion-icon>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+        </li>
+    </ul>
+    {% endblock %}
+
+    {% block scripts %}
+    {{ super() }}
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    {% endblock %}
+</body>
+
+</html>

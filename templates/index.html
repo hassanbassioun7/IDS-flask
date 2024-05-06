@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Home Page</title>
+</head>
+
+<body class="home">
+    {% extends "header.html" %}
+
+    {% block content %}
+
+    <main>
+        <section id="hero">
+            {% if username %}
+            <h1>Welcome {{username}}</h1>
+            {% else %}
+            <h1>Welcome</h1>
+            {% endif %}
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, dolores maiores. br Suscipit nesciunt
+                impedit reiciendis sunt aspernatur, non molestias quibusdam, ipsam rem consequatur optio nisi
+                voluptatibus porro exercitationem ab eius.</p>
+        </section>
+    </main>
+
+    {% endblock %}
+
+</body>
+
+</html>
