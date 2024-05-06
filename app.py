@@ -14,8 +14,8 @@ from keras.models import load_model
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-intrusion = pickle.load(open('model/intrusion.pkl', 'rb'))
-kddDnnModel = load_model('model/kddDnnFinal.h5')
+intrusion = pickle.load(open('models/intrusion.pkl', 'rb'))
+kddDnnModel = load_model('models/kddDnnFinal.h5')
 
 conn = mysql.connector.connect(host="localhost", user="root", password="", database="ids")
 cursor = conn.cursor()
@@ -164,7 +164,7 @@ def DTpredict():
         return render_template('login.html')
     
 
-with open('model/outcomesFinal.pkl', 'rb') as f:
+with open('models/outcomesFinal.pkl', 'rb') as f:
     outcomes = pickle.load(f)
     
 @app.route('/KDDpredict', methods=['POST'])
