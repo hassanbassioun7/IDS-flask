@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import os
 from flask import Flask, jsonify, render_template, request, redirect, flash, send_file, url_for, session, make_response
-from flask_dropzone import Dropzone
 from datetime import timedelta
 from flask_mysqldb import MySQL
 import mysql.connector
@@ -11,11 +10,22 @@ import pickle
 import urllib.request
 from datetime import datetime
 from keras.models import load_model
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import SGDClassifier, LogisticRegression
+from sklearn.preprocessing import LabelEncoder
+import time
+import threading
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 intrusion = pickle.load(open('models/intrusion.pkl', 'rb'))
 kddDnnModel = load_model('models/kddDnnFinal.h5')
+
+with open('models/outcomesFinal.pkl', 'rb') as f:
+    outcomes = pickle.load(f)
+
+progress = 0
 
 conn = mysql.connector.connect(host="localhost", user="root", password="", database="ids")
 cursor = conn.cursor()
@@ -26,14 +36,11 @@ app.permanent_session_lifetime = timedelta(days=1)
 
 app.config.update(
     UPLOADED_PATH = os.path.join(basedir, 'uploads'),
-    DROPZONE_MAX_FILE_SIZE = 50,
-    DROPZONE_TIMEOUT = 5 * 60 * 1000,
-    DROPZONE_ALLOWED_FILE_CUSTOM = True,
-    DROPZONE_ALLOWED_FILE_TYPE = '.csv, .xlsx',
-    DROPZONE_INVALID_FILE_TYPE = "You can't upload files of this type. Upload CSV or XLSX only",
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024,
     ALLOWED_EXTENSIONS = set(['.csv, .xlsx'])
     )
+
+
 
 @app.route("/")
 def index():
@@ -42,6 +49,8 @@ def index():
     else:
         return render_template('index.html')
     
+    
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     msg=''
@@ -66,13 +75,17 @@ def login():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
+
+
 @app.route("/select_dataset")
 def select_dataset():
     if 'username' in session:
         return render_template('select_dataset.html', username = session['username'])
     else:
         return render_template('login.html')
+    
 
+# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @app.route("/upload_dataset", methods=['GET', 'POST'])
 def upload_dataset():
     if request.method == "POST":
@@ -93,46 +106,71 @@ def upload_dataset():
         return render_template('upload_dataset.html', username = session['username'])
     else:
         return render_template('login.html')
+# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
 
-@app.route("/upload", methods=['GET', 'POST'])
-def upload():
-    if request.method == "POST":
-        filesize = request.cookies.get("filesize")
-        file = request.files["file"]
 
-        print(f"Filesize: {filesize}")
-        print(file)
-
-        res = make_response(jsonify({"message": f"{file.filename} uploaded"}), 200)
-
-        return res
-
-    return render_template('upload.html')
-
-dropzone = Dropzone(app)
-
-@app.route('/dropzone', methods=['POST', 'GET'])
-def dropzone():
+@app.route('/uploadCsv', methods=['GET', 'POST'])
+def uploadCsv():
+    global progress
     if request.method == 'POST':
-        f = request.files.get('file')
-        f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
-    return render_template('dropzone.html')
+        progress = 0  # Reset progress at the start of each upload
+        file = request.files['dataset']
+        filename = secure_filename(file.filename)
+        file_path = os.path.join('uploads', filename)
+        file.save(file_path)
+        
+        # Start the training in a new thread
+        threading.Thread(target=train_model, args=(file_path,)).start()
+        
+        # You can return a message or redirect to another page
+        return jsonify({'message': 'File uploaded and model training started'}), 202
+    
+    if 'loggedin' in session:
+        return render_template('uploadCsv.html', username = session['username'])
+    else:
+        return render_template('login.html')
 
-@app.route('/uploadX')
-def uploadX():
-    return render_template('uploadX.html')  
 
-@app.route('/preview')
-def previewX():
-    return render_template('preview.html')  
+def train_model(file_path):
+    global progress
+    data = pd.read_csv(file_path)
+    
+    # Automatically detect and label encode categorical features
+    categorical_cols = data.select_dtypes(include=['object']).columns
+    le = LabelEncoder()
+    for col in categorical_cols:
+        data[col] = le.fit_transform(data[col])
+    
+    y = data.iloc[:, -1]
+    X = data.iloc[:, :-1]
+    
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    
+    # Initialize the model
+    model = SGDClassifier(loss='log')
+    
+    # Determine the total number of iterations (for simplicity, let's assume 10)
+    total_iterations = 10
+    for i in range(total_iterations):
+        # Update the model with a partial fit
+        model.fit(X_train, y_train)
+        
+        # Update progress
+        progress = int((i + 1) / total_iterations * 100)
+        
+    # Save the trained model
+    pickle.dump(model, open('model.pkl', 'wb'))
+    
+    # Ensure progress is set to 100 at the end
+    progress = 100
 
-@app.route('/previewX',methods=["POST"])
-def preview():
-    if request.method == 'POST':
-        dataset = request.files['datasetfile']
-        df = pd.read_csv(dataset,encoding = 'unicode_escape')
-        df.set_index('Id', inplace=True)
-    return render_template("previewX.html",df_view = df)
+@app.route('/progress')
+def get_progress():
+    return jsonify({'progress': progress})
+
+
 
 @app.route('/prediction', methods = ['GET', 'POST'])
 def prediction():
@@ -141,12 +179,16 @@ def prediction():
     else:
         return render_template('login.html')
     
+    
+
 @app.route('/predictionCopy', methods = ['GET', 'POST'])
 def predictionCopy():
     if 'loggedin' in session:
         return render_template('prediction copy.html', username = session['username'])
     else:
         return render_template('login.html')
+    
+
 
 @app.route('/DTpredict', methods=['POST'])
 def DTpredict():
@@ -164,8 +206,6 @@ def DTpredict():
         return render_template('login.html')
     
 
-with open('models/outcomesFinal.pkl', 'rb') as f:
-    outcomes = pickle.load(f)
     
 @app.route('/KDDpredict', methods=['POST'])
 def KDDpredict():
@@ -182,28 +222,13 @@ def KDDpredict():
         return render_template('login.html')
 
 
-# -------------------------------------------
-
-@app.route('/chart')
-def chart():
-	return render_template('chart.html')
-
-@app.route('/performance')
-def performance():
-	return render_template('performance.html')   
-
-@app.route("/registration")
-def reg():
-    return "Registration details"
-
-
-# -----------------------------------------------
-
 @app.route("/logout")
 def logout():
     session.pop('loggedin', None)
     session.pop('username', None)
     return redirect(url_for('index'))
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
