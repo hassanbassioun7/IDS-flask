@@ -24,7 +24,13 @@
                     <span>
                         <ion-icon name="layers" class="icon"></ion-icon>
                         <span class="option-text">KDD CUP 99</span>
-                        <ion-icon name="information-circle-outline"></ion-icon>
+                        <ion-icon name="information-circle-outline" class="info"></ion-icon>
+                        <div class="content">
+                            <h5>What is KDDCUP99</h5>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos, vel reiciendis. Molestiae
+                                harum at, voluptatibus nulla, adipisci voluptatem enim veritatis ut illum similique,
+                                quibusdam tempora. Saepe repellat aliquid itaque facere!</p>
+                        </div>
                     </span>
 
                     <ion-icon name="chevron-forward-outline" class="icon2-arrow"></ion-icon>
@@ -32,12 +38,30 @@
                     <ul class="third-level-menu">
                         <li class="slct_model" style="--i:2">
                             <a href="{{url_for('prediction')}}">DNN
-                                <ion-icon name="information-circle-outline" style="float: right;"></ion-icon>
+                                <ion-icon name="information-circle-outline" class="info"
+                                    style="float: right;"></ion-icon>
+                                <div class="content">
+                                    <h5>Deep Neural Network</h5>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos, vel reiciendis.
+                                        Molestiae
+                                        harum at, voluptatibus nulla, adipisci voluptatem enim veritatis ut illum
+                                        similique,
+                                        quibusdam tempora. Saepe repellat aliquid itaque facere!</p>
+                                </div>
                             </a>
                         </li>
                         <li class="slct_model" style="--i:1">
                             <a href="{{url_for('predictionCopy')}}">DT
-                                <ion-icon name="information-circle-outline" style="float: right;"></ion-icon>
+                                <ion-icon name="information-circle-outline" class="info"
+                                    style="float: right;"></ion-icon>
+                                <div class="content">
+                                    <h5>Decision Tree</h5>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos, vel reiciendis.
+                                        Molestiae
+                                        harum at, voluptatibus nulla, adipisci voluptatem enim veritatis ut illum
+                                        similique,
+                                        quibusdam tempora. Saepe repellat aliquid itaque facere!</p>
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -48,7 +72,13 @@
                     <span>
                         <ion-icon name="bug" class="icon"></ion-icon>
                         <span class="option-text">UNSW NB 15</span>
-                        <ion-icon name="information-circle-outline"></ion-icon>
+                        <ion-icon name="information-circle-outline" class="info"></ion-icon>
+                        <div class="content">
+                            <h5>What is UNSWNB15</h5>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos, vel reiciendis. Molestiae
+                                harum at, voluptatibus nulla, adipisci voluptatem enim veritatis ut illum similique,
+                                quibusdam tempora. Saepe repellat aliquid itaque facere!</p>
+                        </div>
                     </span>
 
                     <ion-icon name="chevron-forward-outline" class="icon2-arrow"></ion-icon>
@@ -56,12 +86,30 @@
                     <ul class="third-level-menu">
                         <li class="slct_model" style="--i:2">
                             <a href="#">CNN
-                                <ion-icon name="information-circle-outline" style="float: right;"></ion-icon>
+                                <ion-icon name="information-circle-outline" class="info"
+                                    style="float: right;"></ion-icon>
+                                <div class="content">
+                                    <h5>Convolutional Neural Network</h5>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos, vel reiciendis.
+                                        Molestiae
+                                        harum at, voluptatibus nulla, adipisci voluptatem enim veritatis ut illum
+                                        similique,
+                                        quibusdam tempora. Saepe repellat aliquid itaque facere!</p>
+                                </div>
                             </a>
                         </li>
                         <li class="slct_model" style="--i:1">
                             <a href="#">MLP
-                                <ion-icon name="information-circle-outline" style="float: right;"></ion-icon>
+                                <ion-icon name="information-circle-outline" class="info"
+                                    style="float: right;"></ion-icon>
+                                <div class="content">
+                                    <h5>Multi-Layer Perceptron</h5>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos, vel reiciendis.
+                                        Molestiae
+                                        harum at, voluptatibus nulla, adipisci voluptatem enim veritatis ut illum
+                                        similique,
+                                        quibusdam tempora. Saepe repellat aliquid itaque facere!</p>
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -74,6 +122,24 @@
 
     {% block scripts %}
     {{ super() }}
+
+    <script>
+
+        const infoIcons = document.querySelectorAll('.info');
+        const contentDivs = document.querySelectorAll('.content');
+
+        infoIcons.forEach((icon, index) => {
+            icon.addEventListener('mouseenter', () => {
+                contentDivs[index].style.display = 'block';
+            });
+
+            icon.addEventListener('mouseleave', () => {
+                contentDivs[index].style.display = 'none';
+            });
+        });
+
+    </script>
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
