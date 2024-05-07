@@ -3,7 +3,6 @@ import pandas as pd
 import os
 from flask import Flask, jsonify, render_template, request, redirect, flash, send_file, url_for, session, make_response
 from datetime import timedelta
-from flask_mysqldb import MySQL
 import mysql.connector
 from werkzeug.utils import secure_filename
 import pickle
