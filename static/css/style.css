@@ -704,6 +704,8 @@
     justify-content: center;
     width: 380px;
     margin: 150px auto;
+    position: relative;
+    top: 15%;
 }
 
 .select_dataset .top-level-menu .slct {
@@ -798,7 +800,7 @@
     top: 0;
     left: 100%;
     opacity: 0;
-    width: 150px;
+    width: 220px;
     transform: scale(0) translateY(-10px);
     transition: opacity 0.8s ease-in-out, transform 0.5s ease-in-out;
 }
@@ -846,4 +848,20 @@
 .select_dataset .second-level-menu .slct_dataset:hover .third-level-menu {
     opacity: 1;
     transform: scale(1) translateY(0);
+}
+
+.select_dataset .slct_dataset span .content,
+.select_dataset .slct_model .content {
+    display: none;
+    margin-top: 10px;
+    color: #535353;
+}
+
+.select_dataset .slct_dataset span .content {
+    font-size: 0.8em;
+}
+
+.select_dataset .info {
+    margin-left: 10px;
+    color: orange;
 }
