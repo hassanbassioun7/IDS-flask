@@ -107,8 +107,14 @@ def upload_dataset():
         return render_template('login.html')
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+        if 'username' in session:
+         return render_template('about.html', username = session['username'])
+        else:
+            return render_template('about.html')
 
-
+# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @app.route('/uploadCsv', methods=['GET', 'POST'])
 def uploadCsv():
     global progress
