@@ -106,7 +106,8 @@
 .home,
 .upload_dataset,
 .select_dataset,
-.prediction {
+.prediction ,
+.about {
     height: 100vh;
     background-color: #000;
     background-image: url(../img/DIS1.jpg);
@@ -117,14 +118,16 @@
 .home li,
 .upload_dataset li,
 .select_dataset li,
-.prediction li {
+.prediction li,
+.about li {
     list-style: none;
 }
 
 .home a,
 .upload_dataset a,
 .select_dataset a,
-.prediction a {
+.prediction a,
+.about a {
     text-decoration: none;
     color: #fff;
     font-size: 1rem;
@@ -133,14 +136,16 @@
 .home .navbar a:hover,
 .upload_dataset .navbar a:hover,
 .select_dataset .navbar a:hover,
-.prediction .navbar a:hover {
+.prediction .navbar a:hover,
+.about .navbar a:hover {
     color: orange;
 }
 
 .home .username,
 .upload_dataset .username,
 .select_dataset .username,
-.prediction .username {
+.prediction .username,
+.about .username {
     text-decoration: none;
     color: #fff;
     font-size: 1rem;
@@ -150,7 +155,8 @@
 .home header,
 .upload_dataset header,
 .select_dataset header,
-.prediction header {
+.prediction header,
+.about header {
     position: relative;
     padding: 0 2rem;
 }
@@ -158,7 +164,8 @@
 .home .navbar,
 .upload_dataset .navbar,
 .select_dataset .navbar,
-.prediction .navbar {
+.prediction .navbar,
+.about .navbar {
     width: 100%;
     height: 60px;
     max-width: 1200px;
@@ -171,7 +178,8 @@
 .home .navbar .logo a,
 .upload_dataset .navbar .logo a,
 .select_dataset .navbar .logo a,
-.prediction .navbar .logo a {
+.prediction .navbar .logo a,
+.about .navbar .logo a {
     font-size: 1.5rem;
     font-weight: bold;
 }
@@ -179,7 +187,8 @@
 .home .navbar .links,
 .upload_dataset .navbar .links,
 .select_dataset .navbar .links,
-.prediction .navbar .links {
+.prediction .navbar .links,
+.about .navbar .links {
     display: flex;
     gap: 2rem;
 }
@@ -187,7 +196,8 @@
 .home .navbar .toggle_btn,
 .upload_dataset .navbar .toggle_btn,
 .select_dataset .navbar .toggle_btn,
-.prediction .navbar .toggle_btn {
+.prediction .navbar .toggle_btn,
+.about .navbar .toggle_btn {
     color: #fff;
     font-size: 1.5rem;
     cursor: pointer;
@@ -197,7 +207,8 @@
 .home .action_btn,
 .upload_dataset .action_btn,
 .select_dataset .action_btn,
-.prediction .action_btn {
+.prediction .action_btn,
+.about .action_btn {
     background-color: orange;
     color: #fff;
     padding: 0.5rem 1rem;
@@ -213,7 +224,8 @@
 .home .action_btn:hover,
 .upload_dataset .action_btn:hover,
 .select_dataset .action_btn:hover,
-.prediction .action_btn:hover {
+.prediction .action_btn:hover,
+.about .action_btn:hover {
     scale: 1.05;
     color: #fff !important;
 }
@@ -221,7 +233,8 @@
 .home .action_btn:active,
 .upload_dataset .action_btn:active,
 .select_dataset .action_btn:active,
-.prediction .action_btn:active {
+.prediction .action_btn:active, 
+.about .action_btn:active {
     scale: 0.95;
 }
 
@@ -229,7 +242,8 @@
 .home .dropdown_menu,
 .upload_dataset .dropdown_menu,
 .select_dataset .dropdown_menu,
-.prediction .dropdown_menu {
+.prediction .dropdown_menu,
+.about .dropdown_menu {
     display: none;
     position: absolute;
     right: 2rem;
@@ -247,14 +261,16 @@
 .home .dropdown_menu.open,
 .upload_dataset .dropdown_menu.open,
 .select_dataset .dropdown_menu.open,
-.prediction .dropdown_menu.open {
+.prediction .dropdown_menu.open,
+.about .dropdown_menu.open {
     height: 190px;
 }
 
 .home .dropdown_menu li,
 .upload_dataset .dropdown_menu li,
 .select_dataset .dropdown_menu li,
-.prediction .dropdown_menu li {
+.prediction .dropdown_menu li,
+.about .dropdown_menu li {
     padding: 0.7rem;
     display: flex;
     align-items: center;
@@ -264,7 +280,8 @@
 .home .dropdown_menu .action_btn,
 .upload_dataset .dropdown_menu .action_btn,
 .select_dataset .dropdown_menu .action_btn,
-.prediction .dropdown_menu .action_btn {
+.prediction .dropdown_menu .action_btn,
+.about .dropdown_menu .action_btn {
     /* width: 100%; */
     display: flex;
     justify-content: center;
@@ -302,21 +319,25 @@
     .select_dataset .navbar .links,
     .select_dataset .navbar .action_btn,
     .prediction .navbar .links,
-    .prediction .navbar .action_btn {
+    .prediction .navbar .action_btn,
+    .about .navbar .links,
+    .about .navbar .action_btn {
         display: none;
     }
 
     .home .navbar .toggle_btn,
     .upload_dataset .navbar .toggle_btn,
     .select_dataset .navbar .toggle_btn,
-    .prediction .navbar .toggle_btn {
+    .prediction .navbar .toggle_btn,
+    .about .navbar .toggle_btn {
         display: block;
     }
 
     .home .dropdown_menu,
     .upload_dataset .dropdown_menu,
     .select_dataset .dropdown_menu,
-    .prediction .dropdown_menu {
+    .prediction .dropdown_menu,
+    .about .dropdown_menu {
         display: block;
     }
 }
@@ -326,7 +347,8 @@
     .home .dropdown_menu,
     .upload_dataset .dropdown_menu,
     .select_dataset .dropdown_menu,
-    .prediction .dropdown_menu {
+    .prediction .dropdown_menu,
+    .about .dropdown_menu {
         left: 2rem;
         width: unset;
     }
