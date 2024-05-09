@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from flask import Flask, jsonify, render_template, request, redirect, flash, send_file, url_for, session, make_response
 from datetime import timedelta
+from flask_mysqldb import MySQL
 import mysql.connector
 from werkzeug.utils import secure_filename
 import pickle
@@ -18,10 +19,10 @@ import threading
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-intrusion = pickle.load(open('models/intrusion.pkl', 'rb'))
-kddDnnModel = load_model('models/kddDnnFinal.h5')
+intrusion = pickle.load(open('models/H5_PKL/intrusion.pkl', 'rb'))
+kddDnnModel = load_model('models/H5_PKL/kddDnnFinal.h5')
 
-with open('models/outcomesFinal.pkl', 'rb') as f:
+with open('models/H5_PKL/outcomesFinal.pkl', 'rb') as f:
     outcomes = pickle.load(f)
 
 progress = 0
@@ -38,6 +39,8 @@ app.config.update(
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024,
     ALLOWED_EXTENSIONS = set(['.csv, .xlsx'])
     )
+
+MAX_FILE_SIZE = 25 * 1024 * 1024 
 
 
 
@@ -118,7 +121,16 @@ def uploadCsv():
         filename = secure_filename(file.filename)
         file_path = os.path.join('uploads', filename)
         file.save(file_path)
+
+        file_size = os.path.getsize(file_path)
+
+        # Validate file type (CSV)
+        if not filename.lower().endswith('.csv'):
+            return jsonify({'error': 'Please upload a CSV file.'}), 400
         
+        elif file_size > MAX_FILE_SIZE:
+            return jsonify({'error': 'File size exceeds the limit (25MB).'}), 400
+
         # Start the training in a new thread
         threading.Thread(target=train_model, args=(file_path,)).start()
         
@@ -171,24 +183,39 @@ def get_progress():
 
 
 
-@app.route('/prediction', methods = ['GET', 'POST'])
-def prediction():
+@app.route('/kddPredictionDNN', methods = ['GET', 'POST'])
+def kddPredictionDNN():
     if 'loggedin' in session:
-        return render_template('prediction.html', username = session['username'])
+        return render_template('kddPredictionDNN.html', username = session['username'])
     else:
         return render_template('login.html')
     
     
 
-@app.route('/predictionCopy', methods = ['GET', 'POST'])
-def predictionCopy():
+@app.route('/kddPredictionDT', methods = ['GET', 'POST'])
+def kddPredictionDT():
     if 'loggedin' in session:
-        return render_template('prediction copy.html', username = session['username'])
+        return render_template('kddPredictionDT.html', username = session['username'])
     else:
         return render_template('login.html')
     
 
 
+@app.route('/DNNpredict', methods=['POST'])
+def DNNpredict():
+    int_feature = [float(x) for x in request.form.values()]
+  
+    final_features = np.array([int_feature])
+   
+    result = kddDnnModel.predict(final_features)
+    predicted_label = outcomes[np.argmax(result)]  # Convert prediction to original label
+
+    if 'loggedin' in session:
+        return render_template('kddPredictionDNN.html', prediction_text=predicted_label, username=session['username'])
+    else:
+        return render_template('login.html')
+    
+    
 @app.route('/DTpredict', methods=['POST'])
 def DTpredict():
     int_feature = [x for x in request.form.values()]
@@ -200,25 +227,10 @@ def DTpredict():
         print(i, end="")
      
     if 'loggedin' in session:
-        return render_template('prediction.html', prediction_text=i, username=session['username'])
+        return render_template('kddPredictionDT.html', prediction_text=i, username=session['username'])
     else:
         return render_template('login.html')
     
-
-    
-@app.route('/KDDpredict', methods=['POST'])
-def KDDpredict():
-    int_feature = [float(x) for x in request.form.values()]
-  
-    final_features = np.array([int_feature])
-   
-    result = kddDnnModel.predict(final_features)
-    predicted_label = outcomes[np.argmax(result)]  # Convert prediction to original label
-
-    if 'loggedin' in session:
-        return render_template('prediction.html', prediction_text=predicted_label, username=session['username'])
-    else:
-        return render_template('login.html')
 
 
 @app.route("/logout")
