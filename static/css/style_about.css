@@ -1,0 +1,18 @@
+body.about {
+    color: white; /* Set font color to white */
+    text-align: center; /* Align text to the center */
+    padding: 50px; /* Add padding for better readability */
+}
+
+/* Apply styles to the h1 element */
+h1 {
+    font-size: 2.5em; /* Set font size */
+}
+
+/* Apply styles to the p element */
+p {
+    background-color:transparent;
+    font-size: 1.5rem; /* Set font size */
+    line-height: 1.6; /* Set line height for better readability */
+    margin: 20px 0; /* Add margin for better spacing */
+}
