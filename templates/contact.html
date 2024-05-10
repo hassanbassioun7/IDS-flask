@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style_contact.css">
+ 
+</head>
+
+<body class="contact">
+    {% extends "header.html" %}
+
+    {% block content %}
+
+        <h1>Contact Us</h1>
+        <div class="container">
+            <form action="/submit" method="post">
+                <label for="first_name">First Name:</label><br>
+                <input type="text" id="first_name" name="first_name" required><br><br>
+                <label for="last_name">Last Name:</label><br>
+                <input type="text" id="last_name" name="last_name" required><br><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+                <input type="submit" value="Submit">
+            </form>
+       
+    {% endblock %}
+
+</body>
+</html>
