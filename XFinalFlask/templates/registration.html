@@ -1,0 +1,22 @@
+<h1>Trinity registration details for {{name}}</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Student name</th>
+            <th>City</th>
+            <th>contact no</th>
+            <th>email address</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

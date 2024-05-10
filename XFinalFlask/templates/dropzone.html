@@ -1,0 +1,67 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://static.eu1.mindsphere.io/mdsp-css/v2.4.0/css/mdsp-css.min.css" />
+    <link rel="stylesheet" href="../static/dropzone/dropzone.min.css">
+</head>
+
+<body>
+    <div>File drag & drop system with flask dropzone</div>
+    {{dropzone.create(action='dropzone')}}
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class="uxt uxt-defaults forceDefaultElements" id="_mdspcontent">
+        <div class="dropzone__container dragAndDrop__area">
+            <span aria-hidden='true' class='iconUxt upload'></span>
+            <h3 class="dropzone__title">Drop items here</h3>
+            <span class="dropzone__description">or</span>
+            <label class="button button--secondary" for="dropzone__file1">Browse files</label>
+            <input type="file" id="dropzone__file1" name="dropzone__file" multiple />
+        </div>
+        <div class="list dropzone__itemState">
+            <ul class="list__list">
+                <li class="list__item itemState--upload">
+                    <div class="item__icon">
+                        <span class="iconUxt filetypeDefault" aria-hidden="true"></span>
+                        <div class="busyIndicator">
+                            <div class="busyIndicator__ring busyIndicator__ring--small"></div>
+                        </div>
+                    </div>
+                    <div class="item__content">
+                        <div class="content__column content__column--primary">
+                            <h4 class="item__title">
+                                Itemname.suffix
+                            </h4>
+                            <div class="item__description">
+                                57 MB
+                            </div>
+                        </div>
+                        <div class="content__column has-alignment-right">
+                            <button class="button button--ghost has-icon-only"></button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div> -->
+
+    <script src="../static/dropzone/dropzone.min.js"></script>
+    {{dropzone.config()}}
+</body>
+
+</html>

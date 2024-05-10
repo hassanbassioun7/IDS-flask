@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body class="upload">
+    <div class="wrapper">
+        <header>File Uploader</header>
+        <form id="form" action="/preview" method="POST" enctype="multipart/form-data">
+            <input type="file" class="file-input" name="datasetfile" accept=".csv, .xlsx" hidden>
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Browse File to Upload</p>
+        </form>
+        <section class="progress-area"></section>
+        <section class="uploaded-area"></section>
+        <div class="submit">
+            <button type="submit" class="submit_btn" form="form">
+                <span class="submit_txt">Upload</span>
+                <span class="submit_icon">
+                    <i class="far fa-file-alt"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+
+
+
+    <script>
+        const form = document.querySelector("form"),
+            fileInput = form.querySelector(".file-input"),
+            progressArea = document.querySelector(".progress-area"),
+            uploadedArea = document.querySelector(".uploaded-area");
+
+        form.addEventListener("click", () => {
+            fileInput.click();
+        })
+
+        fileInput.onchange = ({ target }) => {
+            let file = target.files[0]; //getting file and [0] this means if user has selected multiples files then get the first one only
+            if (file) {
+                let fileName = file.name;
+                if (fileName.length >= 12) {
+                    let splitName = fileName.split('.');
+                    fileName = splitName[0].substring(0, 12) + "... ." + splitName[1];
+                }
+                uploadedFile(fileName);
+            }
+        }
+
+        function uploadedFile(name) {
+            let xhr = new XMLHttpRequest(); //creating new xml obj (AJAX)
+            xhr.open("POST", url);
+            xhr.upload.addEventListener("progress", ({ loaded, total }) => {
+                let fileLoaded = Math.floor((loaded / total) * 100); // getting percentage of loaded file size
+                let fileTotal = Math.floor(total / 1000); // getting file size in KB from bytes
+                let fileSize;
+                (fileTotal < 1024) ? fileSize = fileTotal + " KB" : fileSize = (loaded / (1024 * 1024)).toFixed(2) + " MB";
+                let progressHTML = `<li class="row">
+                                        <i class="fas fa-file-alt"></i>
+                                        <div class="content">
+                                            <div class="details">
+                                                <span class="name">${name} • Uploading</span>
+                                                <span class="percent">${fileLoaded}%</span>
+                                            </div>
+                                            <div class="progress-bar">
+                                                <div class="progress" style="width: ${fileLoaded}%"></div>
+                                            </div>
+                                        </div>
+                                    </li>`;
+
+                uploadedArea.classList.add("onprogress");
+                // uploadedArea.innerHTML = ""; // uncomment to hide history
+                progressArea.innerHTML = progressHTML;
+                if (loaded == total) {
+                    progressArea.innerHTML = "";
+                    let uploadedHTML = `<li class="row">
+                                            <div class="content">
+                                                <i class="fas fa-file-alt"></i>
+                                                <div class="details">
+                                                    <span class="name">${name} • Uploaded</span>
+                                                    <span class="size">${fileSize}</span>
+                                                </div>
+                                            </div>
+                                            <i class="fas fa-check"></i>
+                                        </li>`;
+
+                    uploadedArea.classList.remove("onprogress");
+                    // uploadedArea.innerHTML = uploadedHTML; //uncomment to hide history
+                    uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML); //comment this to hide history
+                }
+            });
+
+            let formData = new FormData(form);
+            xhr.send(formData);
+        }
+    </script>
+
+</body>
+
+<!-- 
+    <?php
+    $file_name = $_FILES['file']['name'];
+    $tmp_name = $_FILES['file']['tmp_name'];
+    $file_up_name = time().$file_name;
+    move_uploaded_file($tmp_name, "files/".$file_up_name);
+    ?> 
+-->
+
+</html>
