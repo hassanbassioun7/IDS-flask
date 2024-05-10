@@ -19,7 +19,7 @@
                 <li><a href="{{url_for('select_dataset')}}">Select Dataset</a></li>
                 <li><a href="{{url_for('upload_dataset')}}">Upload Dataset</a></li>
                 {% endif %}
-                <li><a href="contact">Contact</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
             </ul>
             {% if username %}
             <a href="{{url_for('logout')}}" class="action_btn">Logout</a>
@@ -34,7 +34,7 @@
             <li><a href="{{url_for('select_dataset')}}">Select Dataset</a></li>
             <li><a href="{{url_for('upload_dataset')}}">Upload File</a></li>
             {% endif %}
-            <li><a href="contact">Contact</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
             {% if username %}
             <a href="{{url_for('logout')}}" class="action_btn">Logout</a>
             {% else %}
