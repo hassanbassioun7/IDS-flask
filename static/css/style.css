@@ -108,7 +108,8 @@
 .select_dataset,
 .prediction ,
 .about,
-.contact {
+.contact,
+.graph {
     height: 100vh;
     background-color: #000;
     background-image: url(../img/DIS1.jpg);
@@ -121,7 +122,8 @@
 .select_dataset li,
 .prediction li,
 .about li,
-.contact li {
+.contact li,
+.graph li {
     list-style: none;
 }
 
@@ -130,7 +132,8 @@
 .select_dataset a,
 .prediction a,
 .about a,
-.contact a {
+.contact a,
+.graph a {
     text-decoration: none;
     color: #fff;
     font-size: 1rem;
@@ -141,7 +144,8 @@
 .select_dataset .navbar a:hover,
 .prediction .navbar a:hover,
 .about .navbar a:hover,
-.contact .navbar a:hover {
+.contact .navbar a:hover,
+.graph .navbar a:hover {
     color: orange;
 }
 
@@ -150,7 +154,8 @@
 .select_dataset .username,
 .prediction .username,
 .about .username,
-.contact .username {
+.contact .username,
+.graph .username {
     text-decoration: none;
     color: #fff;
     font-size: 1rem;
@@ -162,7 +167,8 @@
 .select_dataset header,
 .prediction header,
 .about header,
-.contact header {
+.contact header,
+.graph header {
     position: relative;
     padding: 0 2rem;
 }
@@ -172,7 +178,8 @@
 .select_dataset .navbar,
 .prediction .navbar,
 .about .navbar,
-.contact .navbar {
+.contact .navbar,
+.graph .navbar {
     width: 100%;
     height: 60px;
     max-width: 1200px;
@@ -187,7 +194,8 @@
 .select_dataset .navbar .logo a,
 .prediction .navbar .logo a,
 .about .navbar .logo a,
-.contact .navbar .logo a {
+.contact .navbar .logo a,
+.graph .navbar .logo a {
     font-size: 1.5rem;
     font-weight: bold;
 }
@@ -197,7 +205,8 @@
 .select_dataset .navbar .links,
 .prediction .navbar .links,
 .about .navbar .links,
-.contact .navbar .links {
+.contact .navbar .links,
+.graph .navbar .links {
     display: flex;
     gap: 2rem;
 }
@@ -207,7 +216,8 @@
 .select_dataset .navbar .toggle_btn,
 .prediction .navbar .toggle_btn,
 .about .navbar .toggle_btn,
-.contact .navbar .toggle_btn {
+.contact .navbar .toggle_btn,
+.graph  .navbar .toggle_btn {
     color: #fff;
     font-size: 1.5rem;
     cursor: pointer;
@@ -219,7 +229,8 @@
 .select_dataset .action_btn,
 .prediction .action_btn,
 .about .action_btn,
-.contact .action_btn {
+.contact .action_btn,
+.graph .action_btn {
     background-color: orange;
     color: #fff;
     padding: 0.5rem 1rem;
@@ -237,7 +248,8 @@
 .select_dataset .action_btn:hover,
 .prediction .action_btn:hover,
 .about .action_btn:hover,
-.contact .action_btn:hover {
+.contact .action_btn:hover,
+.graph .action_btn:active {
     scale: 1.05;
     color: #fff !important;
 }
@@ -247,7 +259,8 @@
 .select_dataset .action_btn:active,
 .prediction .action_btn:active, 
 .about .action_btn:active,
-.contact .action_btn:active {
+.contact .action_btn:active,
+.graph .action_btn:active {
     scale: 0.95;
 }
 
@@ -257,7 +270,8 @@
 .select_dataset .dropdown_menu,
 .prediction .dropdown_menu,
 .about .dropdown_menu,
-.contact .dropdown_menu {
+.contact .dropdown_menu,
+.graph .dropdown_menu {
     display: none;
     position: absolute;
     right: 2rem;
@@ -277,7 +291,8 @@
 .select_dataset .dropdown_menu.open,
 .prediction .dropdown_menu.open,
 .about .dropdown_menu.open, 
-.contact .dropdown_menu.show {
+.contact .dropdown_menu.show,
+.graph .dropdown_menu.hidden {
     height: 190px;
 }
 
@@ -286,7 +301,8 @@
 .select_dataset .dropdown_menu li,
 .prediction .dropdown_menu li,
 .about .dropdown_menu li,
-.contact .dropdown_menu li {
+.contact .dropdown_menu li,
+.graph .dropdown_menu li {
     padding: 0.7rem;
     display: flex;
     align-items: center;
@@ -298,7 +314,8 @@
 .select_dataset .dropdown_menu .action_btn,
 .prediction .dropdown_menu .action_btn,
 .about .dropdown_menu .action_btn,
-.contact .dropdown_menu .action_btn {
+.contact .dropdown_menu .action_btn,
+.graph .dropdown_menu .action_btn {
     /* width: 100%; */
     display: flex;
     justify-content: center;
@@ -340,7 +357,9 @@
     .about .navbar .links,
     .about .navbar .action_btn,
     .contact .navbar .links,
-    .contact .navbar .action_btn {
+    .contact .navbar .action_btn,
+    .graph .navbar .links,
+    .graph .navbar .action_btn {
         display: none;
     }
 
@@ -349,7 +368,8 @@
     .select_dataset .navbar .toggle_btn,
     .prediction .navbar .toggle_btn,
     .about .navbar .toggle_btn,
-    .contact .navbar .toggle_btn {
+    .contact .navbar .toggle_btn,
+    .graph .navbar .toggle_btn{
         display: block;
     }
 
@@ -358,7 +378,8 @@
     .select_dataset .dropdown_menu,
     .prediction .dropdown_menu,
     .about .dropdown_menu,
-    .contact .dropdown_menu {
+    .contact .dropdown_menu,
+    .graph .dropdown_menu {
         display: block;
     }
 }
@@ -370,7 +391,8 @@
     .select_dataset .dropdown_menu,
     .prediction .dropdown_menu,
     .about .dropdown_menu,
-    .contact .dropdown_menu {
+    .contact .dropdown_menu,
+    .graph .dropdown_menu {
         left: 2rem;
         width: unset;
     }
