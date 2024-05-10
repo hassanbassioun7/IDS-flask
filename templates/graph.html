@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style_graph.css">
+</head>
+
+<body class="graph">
+ {% extends "header.html" %}
+
+ {% block content %}
+
+        <h1>Graph</h1>
+        <div class="image-container">
+            <div>
+                <h3>Image 1</h3>
+                <img src="{{ url_for('static', filename='img/image1.jpg') }}" alt="Image 1">
+            </div>
+            <div>
+                <h3>Image 2</h3>
+                <img src="{{ url_for('static', filename='img/image2.jpg') }}" alt="Image 2">
+            </div>
+        </div>
+ {% endblock %}
+
+</body>
+</html>
