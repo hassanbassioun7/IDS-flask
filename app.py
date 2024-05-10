@@ -152,6 +152,13 @@ def send_email(first_name, last_name, email, message):
     smtp_server.sendmail(sender_email, receiver_email, msg.as_string())
     smtp_server.quit()
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@app.route('/graph', methods=['GET', 'POST'])
+def graph():
+    if 'username' in session:
+        return render_template('graph.html', username = session['username'])
+    else:
+        return render_template('graph.html')
+# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @app.route('/uploadCsv', methods=['GET', 'POST'])
 def uploadCsv():
     global progress
