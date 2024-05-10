@@ -12,8 +12,10 @@ from keras.models import load_model
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import SGDClassifier, LogisticRegression
 from sklearn.preprocessing import LabelEncoder
+from email.mime.text import MIMEText
 import time
 import threading
+import smtplib
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -113,7 +115,42 @@ def about():
          return render_template('about.html', username = session['username'])
         else:
             return render_template('about.html')
+ # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+        if 'username' in session:
+         return render_template('contact.html', username = session['username'])
+        else:
+            return render_template('contact.html')
+        
+@app.route('/submit', methods=['POST'])
+def submit_form():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        message = request.form['message']
 
+        # Send email
+        send_email(first_name, last_name, email, message)
+        return 'Form submitted successfully!'
+
+def send_email(first_name, last_name, email, message):
+    sender_email = "yusuf.msalem@gmail.com"  # Change this to your email address
+    receiver_email = "yusuf.msalem@gmial.com"  # Change this to recipient email address
+    subject = "Contact Form Submission"
+    body = f"First Name: {first_name}\nLast Name: {last_name}\nEmail: {email}\nMessage: {message}"
+
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+
+    smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
+    smtp_server.starttls()
+    smtp_server.login(sender_email, "jlog qusb dhlb ckfu")  # Change this to your email password
+    smtp_server.sendmail(sender_email, receiver_email, msg.as_string())
+    smtp_server.quit()
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @app.route('/uploadCsv', methods=['GET', 'POST'])
 def uploadCsv():
